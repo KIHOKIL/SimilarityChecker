@@ -4,7 +4,12 @@
 
 using namespace std;
 #define MAX_LEN_SCORE 60
-
+struct CountResult
+{
+	int strDb1Len;
+	int strDb2Len;
+	int sameCnt;
+};
 class SimilarityChecker
 {
 public:
@@ -22,23 +27,35 @@ public:
 		return getFracScore(A, B);
 	}
 
-	int getScoreAlpha()
+	CountResult getCntResult()
 	{
-		set <char> sc1, sc2;
+		set <char> strDb1, strDb2;
 
-		for(char c : s1)	sc1.insert(c);
-		for(char cc : s2)	sc2.insert(cc);
+		for(char c : s1)	strDb1.insert(c);
+		for(char cc : s2)	strDb2.insert(cc);
 
 		int sameCnt = 0;
-		int lengthA = sc1.size();
-		int lengthB = sc2.size();
+		int strDb1Len = strDb1.size();
+		int strDb2Len = strDb2.size();
 
-		for (char c : sc1)
-			if (sc2.count(c)) sameCnt++;
+		for (char c : strDb1)
+			if (strDb2.count(c)) sameCnt++;
 
-		if (sc1.size() == sameCnt) return 40;
-		if (sameCnt == 0) return 0;
-		return (sameCnt * 40 / (lengthA + lengthB - sameCnt));
+		return { strDb1Len ,strDb2Len ,sameCnt };
+	}
+
+	int getAlphaScoreValue(CountResult cntRslt)
+	{
+		if (cntRslt.strDb1Len == cntRslt.sameCnt) return 40;
+		if (cntRslt.sameCnt == 0) return 0;
+		return (cntRslt.sameCnt * 40 / (cntRslt.strDb1Len + cntRslt.strDb2Len - cntRslt.sameCnt));
+	}
+
+	int getScoreAlpha()
+	{
+		CountResult cntRslt = getCntResult();
+
+		return getAlphaScoreValue(cntRslt);
 	}
 
 private:
