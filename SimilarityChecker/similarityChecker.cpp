@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <set>
+
 using namespace std;
 #define MAX_LEN_SCORE 60
 
@@ -19,6 +21,26 @@ public:
 
 		return getFracScore(A, B);
 	}
+
+	int getScoreAlpha()
+	{
+		set <char> sc1, sc2;
+
+		for(char c : s1)	sc1.insert(c);
+		for(char cc : s2)	sc2.insert(cc);
+
+		int sameCnt = 0;
+		int lengthA = sc1.size();
+		int lengthB = sc2.size();
+
+		for (char c : sc1)
+			if (sc2.count(c)) sameCnt++;
+
+		if (sc1.size() == sameCnt) return 40;
+		if (sameCnt == 0) return 0;
+		return (sameCnt * 40 / (lengthA + lengthB - sameCnt));
+	}
+
 private:
 	bool isLenEqual(int A, int B)
 	{

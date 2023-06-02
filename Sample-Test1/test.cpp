@@ -89,3 +89,51 @@ TEST(SimilarityChecker, fractional6) {
 	EXPECT_EQ(51, smChk.getScoreLength());
 
 }
+
+TEST(SimilarityChecker, alphaMaxScore1) {
+
+	SimilarityChecker smChk("abceopop", "abceopop");
+
+	EXPECT_EQ(40, smChk.getScoreAlpha());
+
+}
+
+TEST(SimilarityChecker, alphaMaxScore2) {
+
+	SimilarityChecker smChk("abceopop", "abceop");
+
+	EXPECT_EQ(40, smChk.getScoreAlpha());
+
+}
+
+TEST(SimilarityChecker, alphaMaxScore3) {
+
+	SimilarityChecker smChk("BBAAA", "AB");
+
+	EXPECT_EQ(40, smChk.getScoreAlpha());
+
+}
+
+TEST(SimilarityChecker, alphaZeroScore1) {
+
+	SimilarityChecker smChk("abceopop", "dfrr");
+
+	EXPECT_EQ(0, smChk.getScoreAlpha());
+
+}
+
+TEST(SimilarityChecker, alphaZeroScore2) {
+
+	SimilarityChecker smChk("GHJI", "KLOPY");
+
+	EXPECT_EQ(0, smChk.getScoreAlpha());
+
+}
+
+TEST(SimilarityChecker, alphaFractional1) {
+
+	SimilarityChecker smChk("GHJI", "GHJKOP");
+
+	EXPECT_EQ(17, smChk.getScoreAlpha());
+
+}
