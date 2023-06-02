@@ -4,6 +4,8 @@
 
 using namespace std;
 #define MAX_LEN_SCORE 60
+#define MAX_LEN_ALPHA 40
+
 struct CountResult
 {
 	int strDb1Len;
@@ -13,10 +15,8 @@ struct CountResult
 class SimilarityChecker
 {
 public:
-	SimilarityChecker(string str1, string str2)
-	: s1(str1), s2(str2) {}
 
-	int getScoreLength()
+	int getScoreLength(const string& s1, const string& s2)
 	{
 		int A = s1.length();
 		int B = s2.length();
@@ -27,7 +27,7 @@ public:
 		return getFracScore(A, B);
 	}
 
-	CountResult getCntResult()
+	CountResult getCntResult(string s1, string s2)
 	{
 		set <char> strDb1, strDb2;
 
@@ -46,14 +46,14 @@ public:
 
 	int getAlphaScoreValue(CountResult cntRslt)
 	{
-		if (cntRslt.strDb1Len == cntRslt.sameCnt) return 40;
+		if (cntRslt.strDb1Len == cntRslt.sameCnt) return MAX_LEN_ALPHA;
 		if (cntRslt.sameCnt == 0) return 0;
-		return (cntRslt.sameCnt * 40 / (cntRslt.strDb1Len + cntRslt.strDb2Len - cntRslt.sameCnt));
+		return (cntRslt.sameCnt * MAX_LEN_ALPHA / (cntRslt.strDb1Len + cntRslt.strDb2Len - cntRslt.sameCnt));
 	}
 
-	int getScoreAlpha()
+	int getScoreAlpha(string s1, string s2)
 	{
-		CountResult cntRslt = getCntResult();
+		CountResult cntRslt = getCntResult(s1, s2);
 
 		return getAlphaScoreValue(cntRslt);
 	}
@@ -74,6 +74,4 @@ private:
 		if (B > A) swap(A, B);
 		return (2 * B - A) * MAX_LEN_SCORE / B;	//(1 - (A - B) / B) * 60;
 	}
-	string s1;
-	string s2;
 };

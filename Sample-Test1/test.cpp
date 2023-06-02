@@ -1,139 +1,110 @@
 #include "pch.h"
 #include "../SimilarityChecker/similarityChecker.cpp"
 
+class LengthFixture : public testing::Test
+{
+public:
+	SimilarityChecker smChk;
+};
 
-TEST(SimilarityChecker, maxlength) {
+TEST_F(LengthFixture, maxlength) {
 
-	SimilarityChecker smChk("abcdefg","hijklmn");
-
-	EXPECT_EQ(60, smChk.getScoreLength());
-
-}
-
-TEST(SimilarityChecker, 2xLenDiff1) {
-
-	SimilarityChecker smChk("abcdef", "hij");
-
-	EXPECT_EQ(0, smChk.getScoreLength());
+	EXPECT_EQ(60, smChk.getScoreLength("abcdefg", "hijklmn"));
 
 }
 
-TEST(SimilarityChecker, 2xLenDiff2) {
+TEST_F(LengthFixture, 2xLenDiff1) {
 
-	SimilarityChecker smChk("abcdefu", "hij");
-
-	EXPECT_EQ(0, smChk.getScoreLength());
+	EXPECT_EQ(0, smChk.getScoreLength("abcdef", "hij"));
 
 }
 
-TEST(SimilarityChecker, 2xLenDiff3) {
+TEST_F(LengthFixture, 2xLenDiff2) {
 
-	SimilarityChecker smChk("abc", "hijhdjff");
-
-	EXPECT_EQ(0, smChk.getScoreLength());
+	EXPECT_EQ(0, smChk.getScoreLength("abcdefu", "hij"));
 
 }
 
-TEST(SimilarityChecker, 2xLenDiff4) {
+TEST_F(LengthFixture, 2xLenDiff3) {
 
-	SimilarityChecker smChk("abc", "hijfff");
-
-	EXPECT_EQ(0, smChk.getScoreLength());
+	EXPECT_EQ(0, smChk.getScoreLength("abc", "hijhdjff"));
 
 }
 
-TEST(SimilarityChecker, fractional1) {
+TEST_F(LengthFixture, 2xLenDiff4) {
 
-	SimilarityChecker smChk("abcer", "hijfff");
-
-	EXPECT_EQ(48, smChk.getScoreLength());
+	EXPECT_EQ(0, smChk.getScoreLength("abc", "hijfff"));
 
 }
 
-TEST(SimilarityChecker, fractional2) {
+TEST_F(LengthFixture, fractional1) {
 
-	SimilarityChecker smChk("abce", "hijfff");
-
-	EXPECT_EQ(30, smChk.getScoreLength());
+	EXPECT_EQ(48, smChk.getScoreLength("abcer", "hijfff"));
 
 }
 
-TEST(SimilarityChecker, fractional3) {
+TEST_F(LengthFixture, fractional2) {
 
-	SimilarityChecker smChk( "hijfff", "abcer");
-
-	EXPECT_EQ(48, smChk.getScoreLength());
+	EXPECT_EQ(30, smChk.getScoreLength("abce", "hijfff"));
 
 }
 
-TEST(SimilarityChecker, fractional4) {
+TEST_F(LengthFixture, fractional3) {
 
-	SimilarityChecker smChk("hijfff", "abce");
-
-	EXPECT_EQ(30, smChk.getScoreLength());
+	EXPECT_EQ(48, smChk.getScoreLength("hijfff", "abcer"));
 
 }
 
-TEST(SimilarityChecker, fractional5) {
+TEST_F(LengthFixture, fractional4) {
 
-	SimilarityChecker smChk("hijfffg", "abceopop");
-
-	EXPECT_EQ(51, smChk.getScoreLength());
+	EXPECT_EQ(30, smChk.getScoreLength("hijfff", "abce"));
 
 }
 
-TEST(SimilarityChecker, fractional6) {
+TEST_F(LengthFixture, fractional5) {
 
-	SimilarityChecker smChk("abceopop", "hijfffg");
-
-	EXPECT_EQ(51, smChk.getScoreLength());
+	EXPECT_EQ(51, smChk.getScoreLength("hijfffg", "abceopop"));
 
 }
 
-TEST(SimilarityChecker, alphaMaxScore1) {
+TEST_F(LengthFixture, fractional6) {
 
-	SimilarityChecker smChk("abceopop", "abceopop");
-
-	EXPECT_EQ(40, smChk.getScoreAlpha());
+	EXPECT_EQ(51, smChk.getScoreLength("abceopop", "hijfffg"));
 
 }
 
-TEST(SimilarityChecker, alphaMaxScore2) {
+TEST_F(LengthFixture, alphaMaxScore1) {
 
-	SimilarityChecker smChk("abceopop", "abceop");
-
-	EXPECT_EQ(40, smChk.getScoreAlpha());
+	EXPECT_EQ(40, smChk.getScoreAlpha("abceopop", "abceopop"));
 
 }
 
-TEST(SimilarityChecker, alphaMaxScore3) {
+TEST_F(LengthFixture, alphaMaxScore2) {
 
-	SimilarityChecker smChk("BBAAA", "AB");
-
-	EXPECT_EQ(40, smChk.getScoreAlpha());
+	EXPECT_EQ(40, smChk.getScoreAlpha("abceopop", "abceop"));
 
 }
 
-TEST(SimilarityChecker, alphaZeroScore1) {
+TEST_F(LengthFixture, alphaMaxScore3) {
 
-	SimilarityChecker smChk("abceopop", "dfrr");
-
-	EXPECT_EQ(0, smChk.getScoreAlpha());
+	EXPECT_EQ(40, smChk.getScoreAlpha("BBAAA", "AB"));
 
 }
 
-TEST(SimilarityChecker, alphaZeroScore2) {
+TEST_F(LengthFixture, alphaZeroScore1) {
 
-	SimilarityChecker smChk("GHJI", "KLOPY");
-
-	EXPECT_EQ(0, smChk.getScoreAlpha());
+	EXPECT_EQ(0, smChk.getScoreAlpha("abceopop", "dfrr"));
 
 }
 
-TEST(SimilarityChecker, alphaFractional1) {
+TEST_F(LengthFixture, alphaZeroScore2) {
 
-	SimilarityChecker smChk("GHJI", "GHJKOP");
+	EXPECT_EQ(0, smChk.getScoreAlpha("GHJI", "KLOPY"));
 
-	EXPECT_EQ(17, smChk.getScoreAlpha());
+}
+
+TEST_F(LengthFixture, alphaFractional1) {
+
+	EXPECT_EQ(17, smChk.getScoreAlpha("GHJI", "GHJKOP"));
 
 }
