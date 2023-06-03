@@ -1,7 +1,7 @@
 ### Similarity Checker
 
-* [] Good Morning
+* [ ] Good Morning
 
 ---
 
-* [] Please check length and alphabet
+* [ ] Please check length and alphabet
