@@ -15,9 +15,18 @@ struct CountResult
 class SimilarityChecker
 {
 public:
-
+	bool isNonUpperAlpha(const string s)
+	{
+		for (char c : s)
+		{
+			if (!(c >= 'A' && c <= 'Z')) return true;
+		}
+		return false;
+	}
 	int getScoreLength(const string& s1, const string& s2)
 	{
+		if (isNonUpperAlpha(s1) || isNonUpperAlpha(s2)) return -1;
+
 		int A = s1.length();
 		int B = s2.length();
 
@@ -53,9 +62,9 @@ public:
 
 	int getScoreAlpha(string s1, string s2)
 	{
-		CountResult cntRslt = getCntResult(s1, s2);
+		if (isNonUpperAlpha(s1) || isNonUpperAlpha(s2)) return -1;
 
-		return getAlphaScoreValue(cntRslt);
+		return getAlphaScoreValue(getCntResult(s1, s2));
 	}
 
 private:
