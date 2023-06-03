@@ -13,7 +13,6 @@ struct CountResult
 	int sameCnt;
 };
 
-
 class InterfaceCheck
 {
 public:
