@@ -12,6 +12,34 @@ struct CountResult
 	int strDb2Len;
 	int sameCnt;
 };
+
+
+class InterfaceCheck
+{
+public:
+	virtual int getScore() = 0;
+private:
+
+};
+
+class Length : public InterfaceCheck
+{
+public:
+	virtual int getSore()
+	{
+		return 0;
+	}
+};
+
+class Alpha : public InterfaceCheck
+{
+public:
+	virtual int getScore()
+	{
+		return 0;
+	}
+};
+
 class SimilarityChecker
 {
 public:
