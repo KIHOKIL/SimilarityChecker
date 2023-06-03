@@ -1,7 +1,7 @@
 ### Similarity Checker
 
-* æ»≥Á«œººø‰.
+* [ ] Good Morning
 
 ---
 
-* π›∞©Ω¿¥œ¥Ÿ.
+* [ ] Please check length and alphabet
